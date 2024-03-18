@@ -37,5 +37,5 @@ steps:
   displayName: 'Publish Docs'
   inputs:
     pathToPublish: '$(build.artifactStagingDirectory)/docs'
-    artifactName: Docs
+    artifactName: 'Docs'
   condition: succeededOrFailed()
