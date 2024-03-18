@@ -32,10 +32,10 @@ steps:
     artifactName: 'drop'
     artifactType: 'container'
   displayName: Publish artifacts
-  
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Docs'
   inputs:
-    PathtoPublish: $(system.defaultworkingdirectory)/docs
-    ArtifactName: Docs
+    pathToPublish: '$(build.artifactStagingDirectory)/docs'
+    artifactName: Docs
   condition: succeededOrFailed()
