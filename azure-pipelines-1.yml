@@ -33,9 +33,15 @@ steps:
     artifactType: 'container'
   displayName: Publish artifacts
 
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish Docs'
+#  inputs:
+#    pathToPublish: '$(build.artifactStagingDirectory)/docs'
+#    artifactName: 'Docs'
+#  condition: succeededOrFailed()
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Docs'
   inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)/docs'
-    artifactName: 'Docs'
-  condition: succeededOrFailed()
+    pathToPublish: '$(build.artifactStagingDirectory)'
+    artifactName: 'drop'
+    artifactType: 'container'
+  displayName: Publish artifacts
