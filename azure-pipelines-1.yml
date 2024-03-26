@@ -7,41 +7,24 @@ pool:
   vmImage: 'macOS-latest'
 
 steps:
-- task: Gradle@2
-  inputs:
-    workingDirectory: ''
-    gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'assembleDebug test'
-  displayName: gradlew assembleDebug test
+  - script: |
+      ./docs.sh
+      git config --local user.name "Azure Pipelines"
+      git config --local user.email "tamh@mypinpad.com"
+      git add .
+      git commit -m "Publishing GitHub Pages  ***NO_CI***"
+    displayName: 'Build and commit pages'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**/*.apk'
-    targetFolder: '$(build.artifactStagingDirectory)'
-  displayName: Copy .apk files to artifact staging directory
+  - task: DownloadSecureFile@1
+    inputs:
+      secureFile: deploy_key
+    displayName: 'Get the deploy key'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)'
-    artifactName: 'drop'
-    artifactType: 'container'
-  displayName: Publish artifacts
-
-#- task: PublishBuildArtifacts@1
-#  displayName: 'Publish Docs'
-#  inputs:
-#    pathToPublish: '$(build.artifactStagingDirectory)/docs'
-#    artifactName: 'Docs'
-#  condition: succeededOrFailed()
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)'
-    artifactName: 'drop'
-    artifactType: 'container'
-  displayName: Publish artifacts
+  - script: |
+      mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
+      chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+      ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+#      git@github.com:vtbassmatt/vtbassmatt.github.io.git
+      git remote set-url --push origin git@github.com:tamhuynhmpp/tamhuynhmpp.github.io.git
+      git push origin HEAD:master
+    displayName: 'Publish GitHub Pages'
