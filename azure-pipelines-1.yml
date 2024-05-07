@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/android
 
 pool:
-  vmImage: 'macOS-latest'
+  vmImage: 'Ubuntu-16.04'
 
 steps:
   - script: |
@@ -26,5 +26,5 @@ steps:
       ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 #      git@github.com:vtbassmatt/vtbassmatt.github.io.git
       git remote set-url --push origin git@github.com:tamhuynhmpp/tamhuynhmpp.github.io.git
-      git push origin HEAD:master
+      git push origin HEAD:main
     displayName: 'Publish GitHub Pages'
