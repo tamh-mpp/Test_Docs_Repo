@@ -25,5 +25,5 @@ steps:
       chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_ed25519_3
       ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
       git remote set-url --push origin git@github.com:tamhuynhmpp/tamhuynhmpp.github.io.git
-      git push origin HEAD:main
+      git push origin HEAD:master
     displayName: 'Publish GitHub Pages'
