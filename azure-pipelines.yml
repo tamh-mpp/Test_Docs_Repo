@@ -24,6 +24,6 @@ steps:
       mv $(SecurefileDownload.secureFilePath) ~/.ssh/id_ed25519_3
       chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_ed25519_3
       ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-      git remote set-url --push origin git@github.com:tamhuynhmpp/tamhuynhmpp.github.io.git
+      git remote set-url --push origin git@github.com:tamh-mpp/Test_Docs_Repo
       git push origin HEAD:master
     displayName: 'Publish GitHub Pages'
